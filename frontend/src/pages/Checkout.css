@@ -1,0 +1,444 @@
+/*
+=========================================================
+FASHION SHOP - CHECKOUT STYLESHEET
+File: frontend/src/pages/Checkout.css
+
+PURPOSE:
+1. Checkout page layout
+2. Address form styling
+3. Payment method cards
+4. Order summary and coupon
+5. Responsive mobile design
+========================================================= */
+
+/* =======================================================
+   1. CHECKOUT PAGE
+===================================================== */
+
+.checkout-page {
+  min-height: 100vh;
+  padding: 40px 20px 70px;
+  background: var(--cream);
+  color: var(--text);
+}
+
+.checkout-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.checkout-heading {
+  margin-bottom: 30px;
+}
+
+.checkout-heading h1 {
+  margin: 18px 0 8px;
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.checkout-heading p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.checkout-back {
+  border: none;
+  background: transparent;
+  color: var(--primary);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* =======================================================
+   2. MAIN CHECKOUT LAYOUT
+===================================================== */
+
+.checkout-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.7fr) minmax(300px, 0.9fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.checkout-main {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.checkout-summary {
+  position: sticky;
+  top: 20px;
+}
+
+/* =======================================================
+   3. CHECKOUT CARDS
+===================================================== */
+
+.checkout-card {
+  padding: 25px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--white);
+  box-shadow: var(--shadow);
+}
+
+.checkout-card h2 {
+  margin: 0 0 22px;
+  color: var(--text);
+  font-size: 19px;
+  font-weight: 800;
+}
+
+/* =======================================================
+   4. ADDRESS FORM
+===================================================== */
+
+.checkout-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.checkout-form-grid label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.checkout-form-grid input {
+  width: 100%;
+  min-height: 45px;
+  padding: 11px 13px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  outline: none;
+  background: var(--white);
+  color: var(--text);
+  font-size: 14px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.checkout-form-grid input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(10, 10, 10, 0.1);
+}
+
+.checkout-form-grid input::placeholder {
+  color: var(--muted);
+  font-weight: 400;
+}
+
+.checkout-full-width {
+  grid-column: 1 / -1;
+}
+
+/* =======================================================
+   5. PAYMENT OPTIONS
+===================================================== */
+
+.payment-options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.payment-options label {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 15px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.payment-options label:hover {
+  border-color: var(--primary);
+  background: rgba(10, 10, 10, 0.02);
+}
+
+.payment-options label.selected {
+  border-color: var(--primary);
+  background: rgba(10, 10, 10, 0.04);
+}
+
+.payment-options input {
+  width: 17px;
+  height: 17px;
+  accent-color: var(--primary);
+  cursor: pointer;
+}
+
+.payment-options span {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.payment-options strong {
+  color: var(--text);
+  font-size: 14px;
+}
+
+.payment-options small {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.payment-note {
+  margin: 16px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+/* =======================================================
+   6. ORDER ITEMS
+===================================================== */
+
+.checkout-items {
+  display: flex;
+  flex-direction: column;
+  gap: 17px;
+  margin-bottom: 22px;
+}
+
+.checkout-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 13px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(10, 10, 10, 0.06);
+}
+
+.checkout-item-image {
+  width: 75px;
+  height: 90px;
+  flex-shrink: 0;
+  overflow: hidden;
+  border-radius: 8px;
+  background: rgba(10, 10, 10, 0.04);
+}
+
+.checkout-item-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.checkout-item-details {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.checkout-item-details strong {
+  color: var(--text);
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.checkout-item-details small {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.checkout-empty {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+/* =======================================================
+   7. COUPON SECTION
+===================================================== */
+
+.checkout-coupon {
+  padding: 17px 0;
+  border-top: 1px solid rgba(10, 10, 10, 0.06);
+  border-bottom: 1px solid rgba(10, 10, 10, 0.06);
+}
+
+.checkout-coupon h3 {
+  margin: 0 0 12px;
+  color: var(--text);
+  font-size: 14px;
+}
+
+.coupon-input-row {
+  display: flex;
+  gap: 8px;
+}
+
+.coupon-input-row input {
+  width: 100%;
+  min-width: 0;
+  padding: 11px;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  outline: none;
+  font-size: 13px;
+}
+
+.coupon-input-row input:focus {
+  border-color: var(--primary);
+}
+
+.coupon-input-row button {
+  padding: 0 17px;
+  border: none;
+  border-radius: 7px;
+  background: var(--primary);
+  color: var(--white);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.checkout-coupon > small {
+  display: block;
+  margin-top: 9px;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.coupon-success {
+  margin: 9px 0 0;
+  color: var(--success);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* =======================================================
+   8. PRICE BREAKDOWN
+===================================================== */
+
+.checkout-price-row,
+.checkout-total-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 11px 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.discount-row {
+  color: var(--success);
+}
+
+.checkout-total-row {
+  margin-top: 7px;
+  padding-top: 18px;
+  border-top: 1px dashed var(--border);
+  color: var(--text);
+  font-size: 16px;
+}
+
+.checkout-security {
+  margin: 17px 0 0;
+  color: var(--muted);
+  font-size: 11px;
+  text-align: center;
+}
+
+/* =======================================================
+   9. PLACE ORDER BUTTON
+===================================================== */
+
+.place-order-button {
+  width: 100%;
+  min-height: 52px;
+  border: none;
+  border-radius: 9px;
+  background: var(--primary);
+  color: var(--white);
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.place-order-button:hover:not(:disabled) {
+  background: var(--primary-hover);
+  transform: translateY(-1px);
+}
+
+.place-order-button:disabled {
+  background: var(--muted);
+  cursor: not-allowed;
+}
+
+.checkout-error {
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: rgba(10, 10, 10, 0.04);
+  color: var(--danger);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* =======================================================
+   10. TABLET RESPONSIVE
+===================================================== */
+
+@media (max-width: 900px) {
+  .checkout-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .checkout-summary {
+    position: static;
+  }
+}
+
+/* =======================================================
+   11. MOBILE RESPONSIVE
+===================================================== */
+
+@media (max-width: 600px) {
+  .checkout-page {
+    padding: 24px 12px 45px;
+  }
+
+  .checkout-heading h1 {
+    font-size: 25px;
+  }
+
+  .checkout-card {
+    padding: 17px;
+  }
+
+  .checkout-card h2 {
+    font-size: 17px;
+  }
+
+  .checkout-form-grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .checkout-full-width {
+    grid-column: auto;
+  }
+
+  .checkout-item-image {
+    width: 65px;
+    height: 80px;
+  }
+
+  .coupon-input-row button {
+    padding: 0 12px;
+  }
+}

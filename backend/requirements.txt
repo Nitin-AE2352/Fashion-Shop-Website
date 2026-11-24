@@ -1,0 +1,9 @@
+
+fastapi
+uvicorn
+sqlalchemy
+psycopg[binary]
+python-jose[cryptography]
+python-dotenv
+pydantic[email]
+replicate

@@ -1,0 +1,163 @@
+{
+  "name": "Fashion Shop - New Order Notification",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "new-order",
+        "responseMode": "receivedItem",
+        "responseData": "receivedItem",
+        "options": {}
+      },
+      "id": "webhook-node",
+      "name": "Webhook: New Order",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [250, 300],
+      "webhookId": "fashion-shop-new-order",
+      "credentials": {}
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "order_id",
+              "value": "={{ $json.data.id }}"
+            },
+            {
+              "name": "customer_name",
+              "value": "={{ $json.data.user_id }}"
+            },
+            {
+              "name": "total_amount",
+              "value": "={{ $json.data.total_amount }}"
+            },
+            {
+              "name": "payment_method",
+              "value": "={{ $json.data.payment_method }}"
+            },
+            {
+              "name": "order_status",
+              "value": "={{ $json.data.order_status }}"
+            },
+            {
+              "name": "items_summary",
+              "value": "={{ $json.data.items.map(item => `${item.quantity}x ${item.product_name}`).join(', ') }}"
+            },
+            {
+              "name": "message",
+              "value": "={{ new Order(\"order.placed\") }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "set-node",
+      "name": "Set Order Details",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2.1,
+      "position": [450, 300]
+    },
+    {
+      "parameters": {
+        "condition": {
+          "string": [
+            {
+              "value1": "={{ $json.payment_method }}",
+              "operation": "equals",
+              "value2": "COD"
+            }
+          ]
+        }
+      },
+      "id": "if-node",
+      "name": "Is COD?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1.7,
+      "position": [650, 220]
+    },
+    {
+      "parameters": {
+        "text": "={{ `🛍️ New COD Order #{{ $json.order_id }} placed!\nTotal: ₹{{ $json.total_amount }}\nItems: {{ $json.items_summary }}\nPayment: {{ $json.payment_method }}\nStatus: {{ $json.order_status }}` }}",
+        "channel": "#orders"
+      },
+      "id": "slack-node",
+      "name": "Notify Admin (Slack)",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 1,
+      "position": [850, 100],
+      "credentials": {
+        "slackApi": {
+          "id": "YOUR_SLACK_CREDENTIAL_ID",
+          "name": "Slack account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "to": "admin@yourstore.com",
+        "subject": "={{ `New Order #{{ $json.order_id }} - ₹{{ $json.total_amount }}` }}",
+        "text": "={{ `A new order has been placed on your Fashion Shop.\n\nOrder ID: {{ $json.order_id }}\nTotal: ₹{{ $json.total_amount }}\nPayment: {{ $json.payment_method }}\nStatus: {{ $json.order_status }}\nItems: {{ $json.items_summary }}` }}"
+      },
+      "id": "email-node",
+      "name": "Notify Admin (Email)",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 1,
+      "position": [850, 380],
+      "credentials": {
+        "smtp": {
+          "id": "YOUR_SMTP_CREDENTIAL_ID",
+          "name": "SMTP account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Webhook: New Order": {
+      "main": [
+        [
+          {
+            "node": "Set Order Details",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Order Details": {
+      "main": [
+        [
+          {
+            "node": "Is COD?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is COD?": {
+      "main": [
+        [
+          {
+            "node": "Notify Admin (Slack)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Notify Admin (Email)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "id": "fashion-shop-order-notification-workflow",
+  "versionId": "1"
+}
